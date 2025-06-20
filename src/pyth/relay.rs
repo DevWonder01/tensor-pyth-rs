@@ -25,7 +25,9 @@ pub async fn get_price_feed(key: &str) -> Result<i64, Box<dyn std::error::Error>
         Some(p) => {
             println!("price ........... {} x 10^{}", p.price, p.expo);
             println!("conf ............ {} x 10^{}", p.conf, p.expo);
-            Ok(p.price)
+            let normalized_price = p.price as f64 / 10f64.powi(8);
+            println!("Normalized price: {}", normalized_price);
+            Ok(normalized_price as i64)
         }
         None => {
             println!("price ........... unavailable");
