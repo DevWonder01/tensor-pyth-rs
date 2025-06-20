@@ -1,6 +1,10 @@
 use actix_cors::Cors;
-use actix_web::{App, HttpServer, Responder, middleware::Logger, web};
+use actix_web::{App, HttpServer, middleware::Logger, web};
 use env_logger::Env;
+
+mod pyth;
+
+use crate::pyth::routes::relay_routes; // Assuming relay_routes is defined in pyth module
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -24,7 +28,7 @@ async fn main() -> std::io::Result<()> {
            
             .wrap(Logger::default())
             .wrap(cors)
-        
+            .configure(relay_routes)
             .service(web::resource("/health").to(|| async { "Server is running" }))
     })
     .bind("127.0.0.1:5000")?
