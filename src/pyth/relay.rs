@@ -22,6 +22,7 @@ pub fn get_price_feed(key: &str) -> Result<()> {
         Some(p) => {
             println!("price ........... {} x 10^{}", p.price, p.expo);
             println!("conf ............ {} x 10^{}", p.conf, p.expo);
+            return p.price
         }
         None => {
             println!("price ........... unavailable");
