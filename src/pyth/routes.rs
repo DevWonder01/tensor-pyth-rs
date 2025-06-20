@@ -20,7 +20,7 @@ async fn price_feed(
     web::Query(query): web::Query<QueryParams>,
 ) -> HttpResponse {
 
-    match get_price_feed(&query.feed) {
+    match get_price_feed(&query.feed).await {
         Ok(price) => HttpResponse::Ok().json(PriceResponse {
             price: Some(price),
             error: None,

@@ -31,7 +31,7 @@ async fn main() -> std::io::Result<()> {
             .configure(relay_routes)
             .service(web::resource("/health").to(|| async { "Server is running" }))
     })
-    .bind("127.0.0.1:5000")?
+    .bind("127.0.0.1:6000")?
     .run()
     .await
 }

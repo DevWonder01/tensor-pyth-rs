@@ -1,16 +1,16 @@
 use pyth_sdk_solana::state::SolanaPriceAccount;
-use solana_client::rpc_client::RpcClient;
+use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_program::pubkey::Pubkey;
 use std::str::FromStr;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 pub const RPC_URL: &str = "https://pythnet.rpcpool.com";
 
-pub fn get_price_feed(key: &str) -> Result<i64, Box<dyn std::error::Error>> {
+pub async fn get_price_feed(key: &str) -> Result<i64, Box<dyn std::error::Error>> {
     let clnt = RpcClient::new(RPC_URL.to_string());
     let eth_price_key = Pubkey::from_str(key).unwrap();
 
-    let mut eth_price_account = clnt.get_account(&eth_price_key).unwrap();
+    let mut eth_price_account = clnt.get_account(&eth_price_key).await.unwrap();
     let eth_price_feed =
         SolanaPriceAccount::account_to_feed(&eth_price_key, &mut eth_price_account).unwrap();
 
