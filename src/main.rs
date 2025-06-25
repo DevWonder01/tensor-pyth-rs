@@ -1,11 +1,8 @@
 use actix_cors::Cors;
 use actix_web::{App, HttpServer, middleware::Logger, web};
 use env_logger::Env;
-
 mod pyth;
-
-use crate::pyth::routes::relay_routes; // Assuming relay_routes is defined in pyth module
-
+use crate::pyth::routes::relay_routes; 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(Env::default().default_filter_or("info"));
@@ -25,7 +22,6 @@ async fn main() -> std::io::Result<()> {
             .max_age(3600);
 
         App::new()
-           
             .wrap(Logger::default())
             .wrap(cors)
             .configure(relay_routes)
